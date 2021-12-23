@@ -1,3 +1,5 @@
+# see Shirk A, Cushman S (2011). sGD: software for estimating spatially explicit indices of genetic diversity. Molecular Ecology Resources 11(5): 922-934
+# functions modified slightly to a) avoid errors thrown from a combination of loci with 2 and 3 alleles and b) to incorporate haplotype frequency data
 
 # this takes a genind object in, and outputs a dataframe
 # just like the original genind_obj, but deals better with the fact that some of my loci have 2 alleles and some have 3
@@ -35,8 +37,7 @@ genind2df_digcorrect <- function(genind_obj){
   return(df_dat)
 }
 
-
-
+# slight alterations to original function to deal with errors thrown from the fact that some of my loci have 2 alleles and some have 3 and some errors finding NeEstimator executable
 mysGD <- function (genind_obj, xy, dist.mat, NH_radius, min_N, max_N = NULL, 
                  metrics = NULL, NHmat_ans = FALSE, genout_ans = FALSE, file_name = NULL, 
                  NeEstimator_dir = NULL) {
