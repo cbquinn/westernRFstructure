@@ -28,10 +28,10 @@ library(cowplot)
 source("mysGDfunction.R")
 
 # Helper script that writes genepop file from adegenet object. Used to create input for NeEstimator2
-source("~/Dropbox/BigWestMs/NeEstimator/scripts/write_genepop_function.R")
+source("write_genepop_function.R")
 
 # Function to interpolate with inverse distance weighting, using idw function in package gstat
-source("~/Dropbox/BigWestMs/sGD/scripts/myInterpolateFunction.R")
+source("myInterpolateFunction.R")
 
 ###########################
 #### Load mapping data ####
@@ -42,12 +42,10 @@ states <- map_data("state")
 west <- subset(states, region %in% c("california", "oregon", "washington", "nevada", "idaho", "montana", "utah", "wyoming", "arizona", "new mexico", "colorado"))
 
 # read in polygons
-discrete_polys <- readOGR("~/Dropbox/BigWestMs/qgis/MergedDiscrete_polygon.shp")
+discrete_polys <- readOGR("MergedDiscrete_polygon.shp")
 
 # set color palette
 myPalette <- colorRampPalette(brewer.pal(11, "Spectral"), space="Lab")
-
-setwd("~/Dropbox/BigWestMs/sGD/forgithub/")
 
 ################################################
 #### Load genotypes and lat/lon coordinates ####
@@ -240,8 +238,6 @@ plot.Ne <- ggplot() +
     legend.key.width = unit(3.5, "mm"))
 plot.Ne
 
-ggsave("spatiallyexplicitNE.pdf", height=3)
-
 #### He ####
 
 plot.He <- ggplot() +
@@ -268,8 +264,6 @@ plot.He <- ggplot() +
     legend.key.height = unit(4, "mm"),
     legend.key.width = unit(3.5, "mm"))
 plot.He
-
-ggsave("spatiallyexplicitHE.pdf", height=3)
 
 #### Ho ####
 
@@ -298,8 +292,6 @@ plot.Ho <- ggplot() +
     legend.key.width = unit(3.5, "mm"))
 plot.Ho
 
-ggsave("spatiallyexplicitHO.pdf", height=3)
-
 #### AR ####
 
 plot.Ar <- ggplot() +
@@ -326,8 +318,6 @@ plot.Ar <- ggplot() +
     legend.key.height = unit(4, "mm"),
     legend.key.width = unit(3.5, "mm"))
   plot.Ar
-
-ggsave("spatiallyexplicitAR.pdf", height=3)
 
 #### mtDNA & Ysats ####
 
@@ -371,21 +361,12 @@ plot.y <- plot.y +
 divfig <- plot_grid(plot.mt, plot.y, plot.He, plot.Ne, 
           labels="AUTO")
 divfig
-#ggsave("~/Dropbox/BigWestMs/sGD/plots/spatialDiversity_combined.svg")
-#ggsave("~/Dropbox/BigWestMs/sGD/plots/spatialDiversity_combined.png", height=9, width=9)
-#ggsave("~/Dropbox/BigWestMs/sGD/plots/spatialDiversity_combined.pdf", width=175, units = "mm")
 
 # 175 mm = 2 col = 6.89 inches
-save_plot("~/Dropbox/BigWestMs/sGD/plots/85km10neighbors_final/spatialDiversity_vvmc_combined.pdf",
+save_plot("spatialDiversity_vvmc_combined.pdf",
   divfig,
   base_height = 6.89,
   base_width = 6.89,
-)
-
-save_plot("~/Dropbox/BigWestMs/sGD/plots/85km10neighbors_final/spatialDiversity_vvmc_combined.png",
-          divfig,
-          base_height = 6.89,
-          base_width = 6.89,
 )
 
 #### SI plot ####
@@ -393,12 +374,7 @@ save_plot("~/Dropbox/BigWestMs/sGD/plots/85km10neighbors_final/spatialDiversity_
 sifig <- plot_grid(plot.Ho, plot.Ar,
                    labels="AUTO")
 sifig
-save_plot("~/Dropbox/BigWestMs/sGD/plots/85km10neighbors_final/spatialDiversity_SI.pdf",
-          sifig,
-          base_height = 6.89/2,
-          base_width = 6.89,
-)
-save_plot("~/Dropbox/BigWestMs/sGD/plots/spatialDiversity_SI.tiff",
+save_plot("spatialDiversity_SI.pdf",
           sifig,
           base_height = 6.89/2,
           base_width = 6.89,
